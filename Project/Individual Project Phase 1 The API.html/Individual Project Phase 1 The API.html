@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Individual Assignment 2 (X%)</title>
+    <link type="text/css" rel="stylesheet" href="Course%20Files/assets/css/main.css">
+    <script type="text/javascript" src="Course%20Files/assets/js/script.js"></script>
+</head><body><div class="container-fluid">
+<div class="row justify-content-center">
+<div class="col-sm-12 col-md-10">
+<p><strong>Due:</strong>&nbsp; See your Instructional Plan for exact due dates.</p>
+<p><strong>Submit to: </strong>The <strong>Individual Project Phase 1</strong>&nbsp;submission folder. Submission folders can be accessed by selecting <strong>Course Tools</strong> and then <strong>Assignments </strong>on the course navigation bar.</p>
+<h2>Description</h2>
+<p data-path-to-node="2">In this phase of the Course Project, you will architect and build the "Headless" Backend Engine that will power your final application. Working individually, you will create a RESTful API using Node.js, Express, and a relational database (MySQL/MariaDB).</p>
+<p data-path-to-node="3">This API will serve as the foundation for your Front-End application in Phase 2. Your goal is to build a secure, robust, and well-documented service that handles data persistence, user authentication, and business logic. <strong>There is no UI/Frontend component for this deliverable.</strong></p>
+<h3>Rationale</h3>
+<p>This assignment will evaluate the following Course Learning Outcomes:</p>
+<ul>
+<li>CLO1: Architect and develop scalable, RESTful APIs using Node.js and Express frameworks to serve data to client applications.&nbsp;</li>
+<li>CLO2: Implement persistent data storage solutions using a relational database (e.g., MySQL or MariaDB) to manage application data structures.&nbsp;</li>
+<li>CLO5: Apply authentication and authorization security best practices to protect user data and API endpoints.&nbsp;</li>
+<li>CLO6: Deploy full-stack applications to modern cloud hosting platforms using continuous integration/continuous deployment (CI/CD) workflows.</li>
+</ul>
+<h2>Directions</h2>
+<ol>
+<li><strong>Project Setup and Architecture</strong>
+<ul>
+<li>Initialize a new Git repository. <strong>Do not</strong> use a "monorepo" unless you are comfortable with advanced deployment; keeping the API in its own repo is recommended for simplicity.</li>
+<li>Connect your Node.js application to your SQL database (using an ORM like Sequelize/TypeORM or a driver like <code>mysql2</code>).&nbsp;</li>
+<li>Implement the <strong>3 Entities</strong> defined in your Project Proposal:
+<ul>
+<li><strong>Users Table:</strong> Must handle secure password storage (hashing with <code>bcrypt</code> or similar).</li>
+<li><strong>Resource A:</strong> Your main data entity (e.g., Products, Tickets).</li>
+<li><strong>Resource B:</strong> Your related data entity (e.g., Reviews, Comments).</li>
+</ul>
+</li>
+<li><strong><em>Requirement:</em></strong> You must define and enforce the relationships (One-to-Many or Many-to-Many) between these tables using Foreign Keys.</li>
+</ul>
+</li>
+<li><strong>Authentication and Security</strong>
+<ul>
+<li>Implement <strong>JSON Web Token (JWT)</strong> authentication.</li>
+<li>Create public routes for <code>POST /register</code> and <code>POST /login</code>.</li>
+<li>Create middleware to protect private routes (verify the token before allowing access).</li>
+<li><strong><em>Requirement:</em> </strong>Passwords must <strong>never</strong> be stored in plain text.</li>
+</ul>
+</li>
+<li><strong>API Endpoints (CRUD Functionality)</strong>
+<ul>
+<li>Build standard RESTful routes for your resources. At a minimum, your API must support:
+<ul>
+<li><strong>GET</strong> (Read all &amp; Read single by ID)</li>
+<li><strong>POST</strong> (Create new)</li>
+<li><strong>PUT</strong>&nbsp;(Update existing)</li>
+<li><strong>DELETE</strong> (Remove)</li>
+</ul>
+</li>
+<li><strong><em>Requirement:</em></strong> Ensure proper HTTP status codes are returned (e.g., <code>200</code> for OK, <code>201</code> for Created, <code>401</code> for Unauthorized, <code>404</code> for Not Found, <code>500</code> for Server Error).</li>
+</ul>
+</li>
+<li><strong>Documentation</strong>
+<ul>
+<li>Since there is no Frontend yet, you must prove your API works using documentation.</li>
+<li>Create a <strong>Postman/Talend Collection</strong> (or Swagger/OpenAPI docs) that includes example requests for every endpoint.</li>
+<li>Export this collection as a JSON file and include it in your repository, OR include it as a separate document to the <strong>Individual Project Phase 1</strong>&nbsp;submission folder.&nbsp;</li>
+</ul>
+</li>
+<li><strong>Deployment</strong>
+<ul>
+<li>Deploy your API to a public cloud provider (e.g., <a href="https://render.com/" target="_blank" rel="noopener">Render</a>, <a href="https://vercel.com/" target="_blank" rel="noopener">Versel</a>, or <a href="https://www.heroku.com/" target="_blank" rel="noopener">Heroku</a>).</li>
+<li>Your database must also be hosted (e.g., using the hosting provider's managed database service or a cloud DB like <a href="https://aiven.io/" target="_blank" rel="noopener">Aiven </a>or <a href="https://planetscale.com/" target="_blank" rel="noopener">PlanetScale</a>).</li>
+<li><strong><em>Verification:</em></strong> You must provide a live URL (e.g., <code>https://my-api.onrender.com/)</code> that responds to requests.<strong></strong></li>
+</ul>
+</li>
+</ol>
+<h2>Submission Requirements</h2>
+<p>Submit a text file or comment containing&nbsp;<strong>only</strong> the following three links:</p>
+<ol>
+<li><strong>GitHub Repository URL:</strong> (Must show regular commit history).</li>
+<li><strong>Live Deployment URL:</strong> (Must be accessible publicly).</li>
+<li><strong>Documentation Link:</strong> (Postman/Talend public link or location of the JSON file in the repo/assignment folder).</li>
+</ol>
+<p>Submissions must be received in the associated Assignment Folder by the due date posted in the Instructional Plan.</p>
+<p><span style="font-size: 19px;"><strong>Note:</strong> Zip files will <strong>not</strong> be accepted. If the project is not deployed from a GitHub repo and not online, it cannot be graded.&nbsp;</span></p>
+<h2>How Your Assignment Will be Graded</h2>
+<p>A rubric has been created and can be found attached to the submission folder. Submission folders can be accessed by selecting <strong>Course Tools</strong>&nbsp;and then&nbsp;<strong>Assignments</strong> on the course navigation bar.</p>
+<p>See your Program Handbook for the late policy.</p>
+</div>
+</div>
+</div></body></html>
