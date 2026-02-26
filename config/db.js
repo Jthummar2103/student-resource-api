@@ -32,13 +32,20 @@ console.log("Railway Database Connected Successfully");
 
 module.exports = db;
 
+
+// USERS TABLE
+
 db.query(`
 CREATE TABLE IF NOT EXISTS users(
 id INT AUTO_INCREMENT PRIMARY KEY,
+name VARCHAR(255),  
 email VARCHAR(255),
 password VARCHAR(255)
 );
 `);
+
+
+// CATEGORIES TABLE
 
 db.query(`
 CREATE TABLE IF NOT EXISTS categories(
@@ -47,12 +54,16 @@ name VARCHAR(255)
 );
 `);
 
+
+// RESOURCES TABLE
+
 db.query(`
 CREATE TABLE IF NOT EXISTS resources(
 id INT AUTO_INCREMENT PRIMARY KEY,
 title VARCHAR(255),
 description TEXT,
 link TEXT,
+user_id INT,        
 category_id INT
 );
 `);
