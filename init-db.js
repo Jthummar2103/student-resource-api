@@ -13,6 +13,13 @@ const db = mysql.createConnection({
 });
 
 const sql = fs.readFileSync('../sql/student_resource.sql', 'utf8');
+const cleanup = `
+SET FOREIGN_KEY_CHECKS=0;
+DROP TABLE IF EXISTS resources;
+DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS users;
+SET FOREIGN_KEY_CHECKS=1;
+`;
 
 db.connect((err) => {
   if (err) {
@@ -21,12 +28,12 @@ db.connect((err) => {
   }
   console.log('Connected to database');
 
-  db.query(sql, (err, results) => {
+  db.query(cleanup + sql, (err, results) => {
     if (err) {
       console.error('Query failed:', err);
       return;
     }
-    console.log('SQL executed successfully');
+    console.log('Database truncated and seeded successfully');
     db.end();
   });
 });
