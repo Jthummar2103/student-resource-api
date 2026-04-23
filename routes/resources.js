@@ -3,6 +3,7 @@ const router = express.Router();
 
 const db = require("../config/db");
 const auth = require("../middleware/authMiddleware");
+
 router.get("/", (req, res) => {
 
   const sql = `
@@ -10,25 +11,32 @@ router.get("/", (req, res) => {
            users.name AS user_name, 
            categories.name AS category_name
     FROM resources
-    JOIN users ON resources.user_id = users.id
-    JOIN categories ON resources.category_id = categories.id
+    LEFT JOIN users ON resources.user_id = users.id
+    LEFT JOIN categories ON resources.category_id = categories.id
   `;
 
   db.query(sql, (err, data) => {
-
     if (err) {
+      console.log("GET ERROR:", err);
       return res.status(500).json(err);
     }
 
     res.status(200).json(data);
-
   });
 
 });
 
 router.post("/", auth, (req, res) => {
 
-  const { title, description, link, category_id } = req.body;
+  const { title, description, link } = req.body;
+
+
+  const category_id = req.body.category_id || 1;
+
+  if (!req.user || !req.user.id) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
   const user_id = req.user.id;
 
   const sql = `
@@ -40,6 +48,7 @@ router.post("/", auth, (req, res) => {
   db.query(sql, [title, description, link, user_id, category_id], (err) => {
 
     if (err) {
+      console.log("POST ERROR:", err); // 🔥 DEBUG
       return res.status(500).json(err);
     }
 
@@ -55,7 +64,8 @@ router.put("/:id", auth, (req, res) => {
 
   const resourceId = req.params.id;
   const userId = req.user.id;
-  const { title, description, link, category_id } = req.body;
+  const { title, description, link } = req.body;
+  const category_id = req.body.category_id || 1;
 
   const checkSql = `
     SELECT * FROM resources 
@@ -64,14 +74,10 @@ router.put("/:id", auth, (req, res) => {
 
   db.query(checkSql, [resourceId, userId], (err, data) => {
 
-    if (err) {
-      return res.status(500).json(err);
-    }
+    if (err) return res.status(500).json(err);
 
     if (!data.length) {
-      return res.status(403).json({
-        message: "Not authorized"
-      });
+      return res.status(403).json({ message: "Not authorized" });
     }
 
     const updateSql = `
@@ -85,9 +91,7 @@ router.put("/:id", auth, (req, res) => {
       [title, description, link, category_id, resourceId],
       (err) => {
 
-        if (err) {
-          return res.status(500).json(err);
-        }
+        if (err) return res.status(500).json(err);
 
         res.status(200).json({
           message: "Resource Updated"
@@ -112,14 +116,10 @@ router.delete("/:id", auth, (req, res) => {
 
   db.query(sql, [resourceId, userId], (err, result) => {
 
-    if (err) {
-      return res.status(500).json(err);
-    }
+    if (err) return res.status(500).json(err);
 
     if (result.affectedRows === 0) {
-      return res.status(403).json({
-        message: "Not authorized"
-      });
+      return res.status(403).json({ message: "Not authorized" });
     }
 
     res.status(200).json({
@@ -129,6 +129,5 @@ router.delete("/:id", auth, (req, res) => {
   });
 
 });
-
 
 module.exports = router;
