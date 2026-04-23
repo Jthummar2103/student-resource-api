@@ -26,7 +26,7 @@ return;
 
 }
 
-console.log("Railway Database Connected Successfully");
+console.log("Local MySQL Connected Successfully");
 
 });
 
